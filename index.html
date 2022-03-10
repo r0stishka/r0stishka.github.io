@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Unity WebGL Player | Unity WebXR Export</title>
-    <meta name="description" content="">
+    <meta name="description" content="zalupa">
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -31,13 +31,13 @@
       var buildUrl = "Build";
       var loaderUrl = buildUrl + "/buildMy.loader.js";
       var config = {
-        dataUrl: buildUrl + "/buildMy.data",
-        frameworkUrl: buildUrl + "/buildMy.framework.js",
-        codeUrl: buildUrl + "/buildMy.wasm",
+        dataUrl: buildUrl + "/buildMy.data.br",
+        frameworkUrl: buildUrl + "/buildMy.framework.js.br",
+        codeUrl: buildUrl + "/buildMy.wasm.br",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "De-Panther",
         productName: "Unity WebXR Export",
-        productVersion: "0.1",
+        productVersion: "1.0",
       };
 
       var container = document.querySelector("#unity-container");
@@ -49,8 +49,8 @@
       var unityInstance = null;
       
 
-      canvasContainer.style.width = "700px";
-      canvasContainer.style.height = "400px";
+      canvasContainer.style.width = "960px";
+      canvasContainer.style.height = "600px";
       loadingBar.style.display = "block";
 
       var script = document.createElement("script");
