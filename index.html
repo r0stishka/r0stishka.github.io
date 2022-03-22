@@ -99,7 +99,7 @@
                 gameInstance= UnityLoader.instantiate("gameContainer", "Build/WebBuild.json", { onProgress: UnityProgress }); 
                 return; 
             }
-            setTimeout(WaitForZCVLoad, 50000);
+            setTimeout(WaitForZCVLoad, 500);
         }
 
         function UnityProgress(gameInstance, progress) {
