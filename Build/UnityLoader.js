@@ -1,1 +1,0 @@
-var UnityLoader=UnityLoader||{Compression:{identity:{require:function(){return{}},decompress:function(e){return e}},gzip:{require:function(e){var t={"inflate.js":function(e,t,r){"use strict";function n(e){if(!(this instanceof n))return new n(e);this.options=s.assign({chunkSize:16384,windowBits:0,to:""},e||{});
