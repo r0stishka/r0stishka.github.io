@@ -1,29 +1,126 @@
+<!-- Adapted from https://github.com/greggman/better-unity-webgl-template/blob/master/Assets/WebGLTemplates/BetterTemplate/index.html -->
+<!-- 26 June 2020 -->
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
+
+<head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | WebGL Test AR</title>
-    <script src="js/lib/aframe.min.js"></script>
-    <script src="js/lib/aframe-ar.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Zappar</title>
+    <style>
+        html {
+            box-sizing: border-box;
+        }
+
+        *,
+        *:before,
+        *:after {
+            box-sizing: inherit;
+        }
+
+        body {
+            margin: 0;
+            background: #444;
+        }
+
+        html, body {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+        }
+
+        #gameContainer {
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            display: block;
+        }
+
+        /* try to handle mobile dialog */
+        canvas+* {
+            z-index: 2;
+        }
+
+        .progress {
+            margin: 1.5em;
+            border: 1px solid white;
+            width: 50vw;
+            display: none;
+        }
+
+        .progress .full {
+            margin: 2px;
+            background: white;
+            height: 1em;
+            transform-origin: top left;
+        }
+
+        #loader {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+    <script type="text/javascript" src="https://libs.zappar.com/zappar-cv/0.3.12/zappar-cv.js"></script>
+
+    <div id="gameContainer"></div>
+    <div id="loader">
+        <div class="progress">
+            <div class="full"></div>
+        </div>
+    </div>
+
     <script src="Build/UnityLoader.js"></script>
-    <script src="js/app.js"></script>
+    <script>
+        var db = indexedDB.open("dummy_indexdb", 1); // iOS 14.6 fix; the call to open indexdb hangs forever otherwise
+        window.zappar=ZCV.initialize();
+        const loader = document.querySelector("#loader");
+        var gameInstance; //= UnityLoader.instantiate("gameContainer", "Build/WebBuild.json", { onProgress: UnityProgress }); 
 
-  </head>
+        ZAPPAR_PERMISSIONS_IMPLEMENTATION
 
-  <body style="margin: 0px; overflow: hidden;">
-    <a-scene embedded arjs vr-mode-ui="enabled: false" copycanvas>
-      <div id="unityContainer" style="z-index: 2" ></div>
-      <!-- <a-marker preset="hiro"> <a-box></a-box> </a-marker> -->
-      <!-- <a-marker type="pattern" url="data/markers/pattern-arjs.patt"><a-box></a-box></a-marker> -->
-      <!-- <a-marker type="pattern" url="data/markers/test.patt" markercontroller="name : hiro"></a-marker> -->
+        function WaitForZCVLoad(){            
+            if (zappar.loaded()) { 
+                //loader.style.display = "none";  
+                gameInstance= UnityLoader.instantiate("gameContainer", "Build/WebBuild.json", { onProgress: UnityProgress }); 
+                return; 
+            }
+            setTimeout(WaitForZCVLoad, 500);
+        }
 
-			<a-marker type="pattern" url="data/markers\Hiro.patt" markercontroller="name : Hiro"></a-marker>
-			<a-marker type="pattern" url="data/markers\Nutty.patt" markercontroller="name : Nutty"></a-marker>
-			<a-marker type="pattern" url="data/markers\NuttyCardboard.patt" markercontroller="name : NuttyCardboard"></a-marker>
+        function UnityProgress(gameInstance, progress) {
+            if (!gameInstance.Module) {
+                return;
+            }
+            if (!gameInstance.progress) {
+                const progress = document.querySelector("#loader .progress");
+                progress.style.display = "block";
+                gameInstance.progress = progress.querySelector(".full");
+            }
+            gameInstance.progress.style.transform = `scaleX(${progress})`;
+            if (progress === 1 && !gameInstance.removeTimeout) {
+                gameInstance.removeTimeout = setTimeout(function () {
+                    loader.style.display = "none";
+                    //WaitForZCVLoad();
+                }, 0); // optionally set a delay in here.
+            }
+        }
 
-      <a-entity camera cameratransform></a-entity>
-    </a-scene>
-  </body>
+    </script>
+</body>
+
 </html>
