@@ -80,14 +80,14 @@
 
       document.addEventListener('onARSupportedCheck', function (event) {
         enterARButton.enable = !event.detail.supported;
-      }, false);
+      }, true);
       document.addEventListener('onVRSupportedCheck', function (event) {
         enterVRButton.disabled = !event.detail.supported;
       }, false);
 
       enterARButton.addEventListener('click', function (event) {
         unityInstance.Module.WebXR.toggleAR();
-      }, false);
+      }, true);
       enterVRButton.addEventListener('click', function (event) {
         unityInstance.Module.WebXR.toggleVR();
       }, false);
