@@ -1,4 +1,4 @@
-const unityInstance = UnityLoader.instantiate("unityContainer", "Build/arwtWEB_build.json");
+const unityInstance = UnityLoader.instantiate("unityContainer", "Build/r0stishka.github.io.json");
 let isCameraReady = false;
 let isDetectionManagerReady = false;
 let gl = null;
