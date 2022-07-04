@@ -68,12 +68,18 @@
 			}	
 		}
 		
-		var gameInstance = UnityLoader.instantiate("gameContainer", "%UNITY_WEBGL_BUILD_URL%", {
-			onProgress: UnityProgress,
-			compatibilityCheck:CheckCompatibility,
-			Module: {
-				//TOTAL_MEMORY: 268435456,
-				onRuntimeInitialized:RuntimeInitialized,
+		 createUnityInstance(document.querySelector("#unity-canvas"), {
+        dataUrl: "Build/web.data",
+        frameworkUrl: "Build/web.asm.framework.js",
+        codeUrl: "Build/web.asm.js",
+        memoryUrl: "Build/web.asm.mem",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "Ground",
+        productVersion: "10.7.6",
+        // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
+        // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
+      });
 			},		
 		});
     </script>
